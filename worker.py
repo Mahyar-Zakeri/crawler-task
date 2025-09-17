@@ -8,7 +8,6 @@ import redis
 import requests
 from prometheus_client import start_http_server, Counter
 
-# Prometheus counters
 fetch_total = Counter("crawler_fetch_total", "Total fetch attempts")
 success_total = Counter("crawler_success_total", "Total successful fetches")
 error_total = Counter("crawler_error_total", "Total failed fetches")
@@ -22,7 +21,6 @@ PG_PASS = os.getenv("POSTGRES_PASSWORD", "crawlerpass")
 PG_PORT = int(os.getenv("POSTGRES_PORT", "5432"))
 
 
-# healthz server
 class HealthHandler(BaseHTTPRequestHandler):
     def do_GET(self):
         if self.path == "/healthz":
@@ -57,7 +55,6 @@ def get_pg_conn():
 
 
 def main():
-    # start metrics & health servers
     start_http_server(8000)
     threading.Thread(target=start_health_server, daemon=True).start()
 
@@ -67,7 +64,7 @@ def main():
 
     print("Worker ready. Waiting for jobs on Redis list 'url_queue'...")
     while True:
-        _, job = r.blpop("url_queue")  # blocks until a URL arrives
+        _, job = r.blpop("url_queue")
         url = job.decode() if isinstance(job, bytes) else job
         fetch_total.inc()
         try:

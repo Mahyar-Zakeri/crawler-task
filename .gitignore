@@ -1,14 +1,25 @@
 # Python cache
 __pycache__/
 *.pyc
+*.pyo
+*.pyd
+
+# Virtual environments
+.venv/
+env/
+venv/
 
 # Logs
 *.log
 
-# Docker volumes (if accidentally created in repo)
+# IDE settings
+.idea/
+.vscode/
+
+# Docker volumes (don’t commit persistent data)
 db_data/
 prometheus_data/
 
-# OS-specific
+# OS-specific files
 .DS_Store
 Thumbs.db
