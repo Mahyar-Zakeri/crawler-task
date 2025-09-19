@@ -7,13 +7,13 @@ This document describes how to respond to specific operational scenarios.
 ## 1) CAPTCHA (auto-quarantine)
 
 **Symptoms**:  
-- HTML response contains a CAPTCHA page (e.g., reCAPTCHA) or HTTP 403.
+- HTML response contains a CAPTCHA page or HTTP 403.
 
 **Actions**:  
-- Place the URL/domain into a quarantine list (e.g., Redis key: `quarantine`) for 10 minutes.  
+- Place the URL/domain into a quarantine list ( Redis key: `quarantine`) for 10 minutes.  
 - Do not requeue the job until the quarantine period expires.  
 - Reduce request rate or change the user-agent.  
-- Log a warning for monitoring/alerting.
+- Log a warning for monitoring or alerting.
 
 **Recovery**:  
 - After the quarantine period, retry once.  
